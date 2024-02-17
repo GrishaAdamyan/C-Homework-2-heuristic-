@@ -1,6 +1,6 @@
-﻿Console.WriteLine("enter the number of row:");
+﻿Console.WriteLine("enter the number of row (0-7):");
 int a = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("enter the number of column:");
+Console.WriteLine("enter the number of column (0-7):");
 int b = Convert.ToInt32(Console.ReadLine());
 int[,] matrix = { {2, 3, 4, 4, 4, 4, 3, 2 },
                {3, 4, 6, 6, 6, 6, 4, 3 },
