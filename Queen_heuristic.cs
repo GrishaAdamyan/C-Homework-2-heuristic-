@@ -3,16 +3,20 @@ int a = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("enter the number of column (0-7):");
 int b = Convert.ToInt32(Console.ReadLine());
 int[,] matrix = new int[8, 8];
+int[,] copy = new int[8, 8];
+int m = 0;
 int flag = 0;
+int c = 0;
 
 do
 {
     int count = addingQueen(a, b);
-    print_matrix();
+    print_matrix(copy, m);
     Console.WriteLine("Continue? 1 or 0");
     int res = Convert.ToInt32(Console.ReadLine());
     if (res == 1 && count != 0)
     {
+        copy = (int[,])matrix.Clone();
         a = -1;
         b = -1;
         int max = 100;
@@ -22,7 +26,7 @@ do
             {
                 if (matrix[i, j] != 1 && matrix[i, j] != 9)
                 {
-                    int min = checking_position(i, j);
+                    int min = checking_position(i, j, copy);
                     if (min <= max)
                     {
                         max = min;
@@ -32,6 +36,7 @@ do
                 }
             }
         }
+        m = max;
     }
     else
     {
@@ -42,7 +47,48 @@ do
 }
 while (flag == 0);
 
-void print_matrix(){
+void print_matrix(int[,] copy, int max)
+{
+    if (c != 0)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (copy[i, j] == 9 && matrix[i, j] == 9)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Q ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else if (copy[i, j] == 1 && matrix[i, j] == 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("1 ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    if (copy[i, j] == max)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write(copy[i, j] + " ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.Write(copy[i, j] + " ");
+                    }
+                }
+                if (copy[i, j] < 10)
+                {
+                    Console.Write(" ");
+                }
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
     for (int k = 0; k < 8; k++)
     {
         for (int l = 0; l < 8; l++)
@@ -66,6 +112,8 @@ void print_matrix(){
         }
         Console.WriteLine();
     }
+    Console.WriteLine();
+    c++;
 }
 
 int addingQueen(int a, int b)
@@ -96,7 +144,7 @@ int addingQueen(int a, int b)
     return count;
 }
 
-int checking_position(int a, int b)
+int checking_position(int a, int b, int[,] copy)
 {
     int count1 = 0;
     for (int i = 0; i < 8; i++)
@@ -116,5 +164,6 @@ int checking_position(int a, int b)
             }
         }
     }
+    copy[a, b] = count1;
     return count1;
 }
