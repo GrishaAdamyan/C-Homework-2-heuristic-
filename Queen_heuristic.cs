@@ -1,7 +1,5 @@
-﻿Console.WriteLine("enter the number of row (0-7):");
-int a = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("enter the number of column (0-7):");
-int b = Convert.ToInt32(Console.ReadLine());
+﻿int a = 0;
+int b = 0;
 int[,] matrix = new int[8, 8];
 int[,] copy = new int[8, 8];
 int m = 0;
@@ -10,10 +8,32 @@ int c = 0;
 
 do
 {
+    if (c == 0)
+    {
+        Console.WriteLine("enter the number of row (0-7):");
+        a = Convert.ToInt32(Console.ReadLine());
+        while (a > 7 || a < 0)
+        {
+            Console.WriteLine("enter the number of row (0-7):");
+            a = Convert.ToInt32(Console.ReadLine());
+        }
+        Console.WriteLine("enter the number of column (0-7):");
+        b = Convert.ToInt32(Console.ReadLine());
+        while (b > 7 || b < 0)
+        {
+            Console.WriteLine("enter the number of column (0-7):");
+            b = Convert.ToInt32(Console.ReadLine());
+        }
+    }
     int count = addingQueen(a, b);
     print_matrix(copy, m);
     Console.WriteLine("Continue? 1 or 0");
     int res = Convert.ToInt32(Console.ReadLine());
+    if (res != 0 && res != 1)
+    {
+        Console.WriteLine("Wrong answer. Exiting...");
+        Environment.Exit(0);
+    }
     if (res == 1 && count != 0)
     {
         copy = (int[,])matrix.Clone();
